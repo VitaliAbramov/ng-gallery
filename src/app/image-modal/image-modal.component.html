@@ -1,0 +1,10 @@
+<div class="modal-header">
+  <h3 class="modal-title pull-left">{{title}}</h3>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <h5>{{date | date: 'medium'}}</h5>
+  <img src="{{url}}" alt="{{title}}" class="img-responsive center-block" />
+</div>

@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="gallery-header">
+    <input type="text" class="form-control" placeholder="Filter" (keyup)="onKey($event)" />
+    <div class="gallery-option-container">
+      <span>SortBy:</span>
+      <button class="btn btn-primary"
+              [class.active]="orderByValue.name=='date'"
+              (click)="orderByDate()">Date
+              <span *ngIf="isOrderByTitle==false"
+                    class="caret"
+                    [class.gallery-caret-up]="isDateSortAsc==true"
+                    [class.gallery-caret-down]="isDateSortAsc==false">
+              </span>
+      </button>
+      <button class="btn btn-primary"
+              [class.active]="orderByValue.name=='title'"
+              (click)="orderByTitle()">Title
+              <span *ngIf="isOrderByTitle==true"
+                    class="caret"
+                    [class.gallery-caret-up]="isTitleSortAsc==true"
+                    [class.gallery-caret-down]="isTitleSortAsc==false">
+              </span>
+      </button>
+
+    </div>
+    <div class="gallery-option-container">
+      <span>Showing {{start-visibleAmount}}-{{start}}/{{totalAmount}} </span>
+      <span class="dropdown" dropdown>
+        <button class="btn btn-primary" type="button" data-toggle="dropdown" dropdownToggle>Visible: {{visibleAmount}}
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li (click)="reset(5)">5</li>
+          <li (click)="reset(10)">10</li>
+          <li (click)="reset(15)">15</li>
+          <li (click)="reset(20)">20</li>
+          <li (click)="reset()">All</li>
+        </ul>
+      </span>
+      <ul class="pager">
+        <li class="previous" *ngIf="start > visibleAmount"><a href="#" (click)="prev()">Previous</a></li>
+        <li class="next" *ngIf="notAtEnd"><a href="#" (click)="next()">Next</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <ul id="thumbnailsList" class="list-unstyled row">
+    <li *ngFor="let image of (visibleImages | imageFilter:filterByValue | imageOrder:orderByValue)"
+        class="list-group-item col-sm-3"
+        (click)="openModal(image)">
+      <p class="text-center text-nowrap" title="{{image.date | date :'long'}}">{{image.date | date :'short'}}</p>
+      <img src="{{image.url}}" class="thumbnail gallery-image" />
+      <p class="text-center text-nowrap gallery-image-text" title="{{image.title}}">{{image.title}}</p>
+    </li>
+  </ul>
+</div>

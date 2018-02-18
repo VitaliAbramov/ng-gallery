@@ -25,7 +25,6 @@ export class ImageOrderPipe implements PipeTransform{
         else if (a > b) return 1;
         else return 0;
       }
-
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input, TemplateRef } from '@angular/core';
+  import { Component, OnChanges, Input, TemplateRef } from '@angular/core';
 import { ImageService } from '../shared/image.service';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
 
@@ -18,7 +18,7 @@ export class GalleryComponent implements OnChanges{
   visibleAmount = 10;
   start = 0;
   notAtEnd = true;
-  totalAmount = 0
+  totalAmount = 0;
 
   isDateSortAsc = false;
   isTitleSortAsc = true;
@@ -34,8 +34,10 @@ export class GalleryComponent implements OnChanges{
   }
 
   constructor(private imageService: ImageService, private modalService: BsModalService) {
-    this.totalAmount = this.imageService.getImages().length;
-    this.setVisibleImages(this.visibleAmount);
+    this.imageService.getImagesFromServer().subscribe(data => {
+      this.totalAmount = data.length;
+      this.setVisibleImages(this.visibleAmount);
+    });
   }
 
   ngOnChanges() {
@@ -68,8 +70,7 @@ export class GalleryComponent implements OnChanges{
 
 
   setVisibleImages(amount: number) {
-    console.log('start:', this.start);
-    console.log('amount:', amount);
+
     this.visibleAmount = amount;
     this.visibleImages = this.imageService.getImages().splice(this.start, amount);
     this.start += amount;
@@ -77,7 +78,7 @@ export class GalleryComponent implements OnChanges{
 
   next(){
     this.setVisibleImages(this.visibleAmount);
-    if(this.start > this.totalAmount){
+    if (this.start > this.totalAmount - this.visibleAmount) {
       this.notAtEnd = false;
       this.start = this.totalAmount;
     }
@@ -102,7 +103,7 @@ export class GalleryComponent implements OnChanges{
     this.notAtEnd = true;
   }
 
-  openModal(initialState, index) {    
+  openModal(initialState) {
     this.modalRef = this.modalService.show(ImageModalComponent, {initialState});
   }
 }

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 // bootstrap style
 import { BsDropdownModule, ModalModule } from 'ngx-bootstrap';
@@ -27,6 +28,7 @@ import { ImageOrderPipe } from './shared/order.pipe';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot()
   ],
